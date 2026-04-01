@@ -7,27 +7,27 @@ void create_linklist(linknode* head) {
 void append_linknode(linknode* head, int xpos) {
     if (head == NULL) return;
 
-    // ✅ 1. 创建新节点并用 calloc 清零（避免垃圾指针）
+    //  创建新节点并用 calloc 清零（避免垃圾指针）
     linknode* newnode = (linknode*)calloc(1, sizeof(linknode));
     if (newnode == NULL) return;  // 内存分配失败保护
 
-    // ✅ 2. 初始化位置数据
+    // 初始化位置数据
     for (int i = 0; i < 8; i++) {
         newnode->Pos[i].x = xpos;
         newnode->Pos[i].y = 0 + 80 * i;  // 垂直排列 8 个点
     }
 
-    // ✅ 3. 显式初始化指针（双重保险）
+    //  初始化指针=
     newnode->next = NULL;
     newnode->prev = NULL;
 
-    // ✅ 4. 找到链表末尾（遍历到最后一个节点）
+    // 找到链表末尾（遍历到最后一个节点）
     linknode* p = head;
     while (p->next != NULL) {
         p = p->next;
     }
 
-    // ✅ 5. 双向链接新节点
+    //双向链接新节点
     p->next = newnode;
     newnode->prev = p;
 }
@@ -46,22 +46,21 @@ void delete_first_node(linknode* head) {
 
     free(first);
 }
-// 删除第一个满足条件的节点（条件：最右边的点移出屏幕）
-// 返回值：1=成功删除，0=未找到可删除的节点
+
 int delete_first_node_if(linknode* head) {
     if (head == NULL || head->next == NULL) return 0;
 
     linknode* p = head->next;  // 从第一个数据节点开始
 
     while (p != NULL) {
-        // ✅ 判断条件：最右边的点完全移出屏幕（可改用 Pos[0] 看你需求）
+        //判断条件：最右边的点完全移出屏幕（可改用 Pos[0] 看你需求）
         if (p->Pos[7].x < -79) {
 
-            // 🔗 1. 保存前后指针（因为马上要 free(p)）
+            // 保存前后指针（因为马上要 free(p)）
             linknode* prev = p->prev;
             linknode* next = p->next;
 
-            // 🔗 2. 重新链接双向链表
+            // 重新链接双向链表
             if (prev != NULL) {
                 prev->next = next;
             }
@@ -69,13 +68,13 @@ int delete_first_node_if(linknode* head) {
                 next->prev = prev;
             }
 
-            // 🗑️ 3. 释放内存
+            // 释放内存
             free(p);
 
-            return 1;  // ✅ 成功删除一个，立即返回
+            return 1;  //成功删除一个，立即返回
         }
         p = p->next;  // 继续找下一个
     }
 
-    return 0;  // ❌ 没找到满足条件的节点
+    return 0;  //没找到满足条件的节点
 }
