@@ -110,7 +110,7 @@ int main() {
 
             // 视图层 (Render)
             DrawGame(&player1, canFly);
-            DrawLinkList(head, 40);
+            DrawLinkList(head, 80);
         }
 
         FlushBatchDraw();

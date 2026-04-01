@@ -51,7 +51,7 @@ void DrawLinkList(linknode* head, int size) {
             int x = (int)p->Pos[i].x;
             int y = (int)p->Pos[i].y;
             ColorPair pair = colorTable[2];
-            DrawBox(x, y, size, _T(""), pair);
+            DrawBox(x, y, size, _T("2"), pair);
         }
 
         p = p->next;
