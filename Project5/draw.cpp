@@ -25,11 +25,16 @@ void DrawBox(int x, int y, int size, LPCTSTR text, ColorPair pair) {
     setlinecolor(BLACK);
     fillrectangle(x, y, x + size, y + size);
     rectangle(x, y, x + size, y + size);
-
+    int origin_width = textwidth(text);
+    int final_width = 80;
+    int font_size = 30;
+    if (origin_width > final_width) {
+		font_size = (int)(font_size * (final_width / (double)origin_width));
+    }
     // 2. 设置字体样式
     settextcolor(pair.text);
     setbkmode(TRANSPARENT);
-    settextstyle(30, 0, _T("Consolas"));
+    settextstyle(font_size, 0, _T("Consolas"));
 
     // 3. 计算文字居中 
     int w = textwidth(text);

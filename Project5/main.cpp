@@ -93,6 +93,7 @@ int main() {
             if (count >= 120) {
                 count = 0;
                 append_linknode(head, 960,order);
+                order++;
 
             }
             move_all_nodes(head);

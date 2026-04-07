@@ -25,7 +25,7 @@ void append_linknode(linknode* head, int xpos, int order) {
     newnode->data[main_pos] = main_val;
 
     // 生成候选集合
-#define MAX_CANDIDATES 20
+#define MAX_CANDIDATES 8
     int candidates[MAX_CANDIDATES];
     int cand_count = 0;
 
