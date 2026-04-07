@@ -50,8 +50,13 @@ void DrawLinkList(linknode* head, int size) {
 
             int x = (int)p->Pos[i].x;
             int y = (int)p->Pos[i].y;
-            ColorPair pair = colorTable[2];
-            DrawBox(x, y, size, _T("2"), pair);
+            long long val = p->data[i];  // 或者 p->data[0]，根据你需要
+            double d = (double)val;      // 转成 double
+            ColorPair pair = colorTable[(int)(log(d) / log(2))%7];
+            wchar_t buf[20];
+            swprintf(buf, 20, L"%d", p->data[i]);  // 或 _itow(num, buf, 10)
+            LPCTSTR str = buf;
+            DrawBox(x, y, size, buf, pair);
         }
 
         p = p->next;

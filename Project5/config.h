@@ -20,13 +20,13 @@ struct circle {
     double vy;
     double energy;
     double maxenergy;
-    int data;
+    long long data;
 };
 struct box {
     int x;
     int y;
     int is_active;
-    int num;
+    long long num;
 };
 typedef struct Colorpair {
     COLORREF bg;

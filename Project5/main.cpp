@@ -10,7 +10,7 @@ int main() {
     int count = 0;
     struct GlobalConfig cfg;
     InitConfig(&cfg);
-
+    int order = 0;
 
     struct circle player1;
     player1.Pos.x = 40;
@@ -92,7 +92,7 @@ int main() {
         else {//游戏开始
             if (count >= 120) {
                 count = 0;
-                append_linknode(head, 960);
+                append_linknode(head, 960,order);
 
             }
             move_all_nodes(head);
