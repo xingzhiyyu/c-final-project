@@ -7,6 +7,7 @@ void create_linklist(linknode* head) {
     head->prev = nullptr;
 }
 void append_linknode(linknode* head, int xpos, int order) {
+    srand((unsigned int)time(NULL));
     if (head == NULL) return;
 
     linknode* newnode = (linknode*)calloc(1, sizeof(linknode));

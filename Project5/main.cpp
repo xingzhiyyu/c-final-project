@@ -96,7 +96,7 @@ int main() {
                 order++;
 
             }
-            move_all_nodes(head);
+            move_all_nodes(head,&cfg);
             delete_first_node_if(head);
 
             // 输入

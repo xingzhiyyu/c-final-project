@@ -59,7 +59,7 @@ void UpdateEnvironment(struct circle* p, const struct GlobalConfig* cfg, int isS
         *canFly = 1;
     }
 }
-void move_all_nodes(linknode* head) {
+void move_all_nodes(linknode* head, const struct GlobalConfig* cfg) {
     if (head == NULL) return;
 
     linknode* p = head->next;  // 跳过 head（一般是哨兵）
@@ -68,7 +68,7 @@ void move_all_nodes(linknode* head) {
 
         // 每个节点有8个点
         for (int i = 0; i < 8; i++) {
-            p->Pos[i].x -= 4;
+            p->Pos[i].x -= cfg->obstacle_speed;
         }
 
         p = p->next;

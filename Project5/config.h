@@ -6,6 +6,7 @@ struct GlobalConfig {
     double gravity, thrust, v_term_up, v_term_down;
     double energy_max, energy_consume, energy_rec_fall, energy_rec_floor, energy_restart_p;
     int scr_w, scr_h, bnd_top, bnd_btm;
+    int obstacle_speed;
 };
 
 // 声明初始化函数

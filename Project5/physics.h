@@ -4,4 +4,4 @@
 
 void UpdatePhysics(struct circle* p, const struct GlobalConfig* cfg, int isSpacePressed, int* canFly);
 void UpdateEnvironment(struct circle* p, const struct GlobalConfig* cfg, int isSpacePressed, int* canFly);
-void move_all_nodes(linknode* head);
+void move_all_nodes(linknode* head, const struct GlobalConfig *cfg);

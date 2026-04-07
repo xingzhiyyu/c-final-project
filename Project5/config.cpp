@@ -19,4 +19,7 @@ void InitConfig(struct GlobalConfig* cfg) {
     cfg->scr_h = 640;
     cfg->bnd_top = 40;
     cfg->bnd_btm = 600;
+
+    // 障碍物设定
+    cfg->obstacle_speed = 6;
 }
