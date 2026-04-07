@@ -19,6 +19,7 @@ int main() {
     player1.maxenergy = cfg.energy_max;
     player1.energy = cfg.energy_max;
     player1.data = 1;
+    player1.isPassing = 0;
 
     int canFly = 1, isSpacePressed = 0;
     int gameStarted = 0;
@@ -40,6 +41,7 @@ int main() {
     while (1) {
         //开始界面
         cleardevice();
+       // setbkcolor(RGB(131, 181, 217));
         if (!gameStarted && !logging) {
 
             int btnWid = 220;
@@ -90,6 +92,7 @@ int main() {
             drawlogininterface();
         }
         else {//游戏开始
+          
             if (count >= 120) {
                 count = 0;
                 append_linknode(head, 960,order);
@@ -110,6 +113,27 @@ int main() {
             // 逻辑层 (Physics)
             UpdatePhysics(&player1, &cfg, isSpacePressed, &canFly);
             UpdateEnvironment(&player1, &cfg, isSpacePressed, &canFly);
+
+            if (CheckCollision(&player1, head)) {
+                // 碰撞了，游戏结束处理
+                // 这里你可以加入游戏结束画面、重置等逻辑
+                // 简单示例：重置游戏
+                //gameStarted = 0;
+                
+                player1.Pos.y = 320;
+                player1.vy = 0;
+                player1.energy = cfg.energy_max;
+                canFly = 1;
+                order = 0;
+                count = 0;
+                player1.isPassing = 0;
+                player1.passingWall = NULL;
+                // 清空链表
+                drawlosinginterface();
+                clear_linklist(head);
+                
+                
+            }
 
             // 视图层 (Render)
             DrawLinkList(head, 80);

@@ -134,3 +134,10 @@ void drawlogininterface() {
     outtextxy(480 - 0.5 * textwidth(_T("please enter your username")), 160 - 0.5 * textheight(_T("please enter your username")), _T("please enter your username"));
     fillrectangle(200, 200, 760, 240);
 }
+void drawlosinginterface() {
+    cleardevice();
+    settextcolor(WHITE);
+    settextstyle(48, 0, _T("Consolas"));
+    outtextxy(480 - 0.5 * textwidth(_T("Game Over!")), 320 - 0.5 * textheight(_T("Game Over!")), _T("Game Over!"));
+    Sleep(2000);
+}

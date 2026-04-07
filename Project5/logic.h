@@ -13,3 +13,4 @@ void create_linklist(linknode* head);
 void append_linknode(linknode* head, int xpos,int ord);
 void delete_first_node(linknode* head);
 int delete_first_node_if(linknode* head);
+void clear_linklist(linknode* head);

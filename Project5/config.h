@@ -2,6 +2,8 @@
 
 #include<graphics.h>
 
+
+struct linknode;
 struct GlobalConfig {
     double gravity, thrust, v_term_up, v_term_down;
     double energy_max, energy_consume, energy_rec_fall, energy_rec_floor, energy_restart_p;
@@ -11,6 +13,7 @@ struct GlobalConfig {
 
 // 声明初始化函数
 void InitConfig(struct GlobalConfig* cfg);
+
 typedef struct pos {
     double x;
     double y;
@@ -22,6 +25,8 @@ struct circle {
     double energy;
     double maxenergy;
     long long data;
+    int isPassing;
+    struct linknode* passingWall;
 };
 struct box {
     int x;

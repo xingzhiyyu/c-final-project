@@ -124,3 +124,14 @@ int delete_first_node_if(linknode* head) {
 
     return 0;  //没找到满足条件的节点
 }
+void clear_linklist(linknode* head) {
+    if (head == NULL) return;
+
+    linknode* p = head->next;
+    while (p != NULL) {
+        linknode* tmp = p;
+        p = p->next;
+        free(tmp);
+    }
+    head->next = NULL;
+}

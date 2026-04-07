@@ -14,3 +14,4 @@ void DrawBox(int x, int y, int size, LPCTSTR text, ColorPair pair);
 void drawlogininterface();
 void DrawLinkList(linknode* head, int size);
 
+void drawlosinginterface();

@@ -8,7 +8,7 @@ void InitConfig(struct GlobalConfig* cfg) {
     cfg->v_term_down = 18.0;
 
     // 能量系统
-    cfg->energy_max = 10.0;
+    cfg->energy_max = 100.0;
     cfg->energy_consume = 0.24;
     cfg->energy_rec_fall = 0.24;
     cfg->energy_rec_floor = 0.12;
