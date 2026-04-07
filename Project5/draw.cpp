@@ -133,11 +133,38 @@ void drawlogininterface() {
     settextstyle(36, 0, _T("Consolas"));
     outtextxy(480 - 0.5 * textwidth(_T("please enter your username")), 160 - 0.5 * textheight(_T("please enter your username")), _T("please enter your username"));
     fillrectangle(200, 200, 760, 240);
+	outtextxy(480 - 0.5 * textwidth(_T("I haven't even created the login page yet,")), 280 - 0.5 * textheight(_T("I haven't even created the login page yet,")), _T("I haven't even created the login page yet,"));
+    outtextxy(480 - 0.5 * textwidth(_T("and I haven't designed the exit button either.")), 320 - 0.5 * textheight(_T("and I haven't designed the exit button either.")), _T("and I haven't designed the exit button either."));
+    outtextxy(480 - 0.5 * textwidth(_T("You need to restart the program right now")), 360 - 0.5 * textheight(_T("You need to restart the program right now")), _T("You need to restart the program right now"));
+
 }
-void drawlosinginterface() {
-    cleardevice();
-    settextcolor(WHITE);
+void drawlosinginterface(int scrW, int scrH, int inRestartBtn, int inQuitBtn) {
+  
+    // Game Over 标题
+    setbkmode(TRANSPARENT);
+    settextcolor(RED);
     settextstyle(48, 0, _T("Consolas"));
-    outtextxy(480 - 0.5 * textwidth(_T("Game Over!")), 320 - 0.5 * textheight(_T("Game Over!")), _T("Game Over!"));
-    Sleep(2000);
+    outtextxy(scrW / 2 - textwidth(_T("Game Over!")) / 2, 180, _T("Game Over!"));
+
+    // 按钮参数
+    int btnW = 220;
+    int btnH = 60;
+    int gap = 24;
+    int left = scrW / 2 - btnW / 2;
+    int restartTop = scrH / 2 - 40;
+    int quitTop = restartTop + btnH + gap;
+
+    setlinecolor(WHITE);
+
+    // Restart 按钮
+    setfillcolor(inRestartBtn ? RGB(20, 100, 190) : RGB(60, 140, 230));
+    fillroundrect(left, restartTop, left + btnW, restartTop + btnH, 12, 12);
+    settextcolor(WHITE);
+    settextstyle(28, 0, _T("Consolas"));
+    outtextxy(left + (btnW - textwidth(_T("RESTART"))) / 2, restartTop + (btnH - textheight(_T("RESTART"))) / 2, _T("RESTART"));
+
+    // Quit 按钮
+    setfillcolor(inQuitBtn ? RGB(140, 40, 40) : RGB(200, 60, 60));
+    fillroundrect(left, quitTop, left + btnW, quitTop + btnH, 12, 12);
+    outtextxy(left + (btnW - textwidth(_T("QUIT"))) / 2, quitTop + (btnH - textheight(_T("QUIT"))) / 2, _T("QUIT"));
 }

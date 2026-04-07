@@ -41,7 +41,7 @@ int main() {
     while (1) {
         //开始界面
         cleardevice();
-       // setbkcolor(RGB(131, 181, 217));
+        setbkcolor(RGB(131, 181, 217));
         if (!gameStarted && !logging) {
 
             int btnWid = 220;
@@ -115,24 +115,70 @@ int main() {
             UpdateEnvironment(&player1, &cfg, isSpacePressed, &canFly);
 
             if (CheckCollision(&player1, head)) {
-                // 碰撞了，游戏结束处理
-                // 这里你可以加入游戏结束画面、重置等逻辑
-                // 简单示例：重置游戏
-                //gameStarted = 0;
-                
+                // 先画游戏场景
+                DrawLinkList(head, 80);
+                DrawGame(&player1, canFly);
+
+                int waiting = 1;
+                int lmx = 0, lmy = 0;  // losing界面的鼠标坐标
+
+                int btnW = 220, btnH = 60, gap = 24;
+                int left = cfg.scr_w / 2 - btnW / 2;
+                int restartTop = cfg.scr_h / 2 - 40;
+                int quitTop = restartTop + btnH + gap;
+
+                while (waiting) {
+                    int inRestartBtn = 0;
+                    int inQuitBtn = 0;
+
+                    while (peekmessage(&msg, EX_MOUSE)) {
+                        lmx = msg.x;
+                        lmy = msg.y;
+
+                        if (msg.message == WM_LBUTTONDOWN) {
+                            if (lmx >= left && lmx <= left + btnW &&
+                                lmy >= restartTop && lmy <= restartTop + btnH) {
+                                waiting = 0;  // restart
+                            }
+                            else if (lmx >= left && lmx <= left + btnW &&
+                                lmy >= quitTop && lmy <= quitTop + btnH) {
+                                clear_linklist(head);
+                                free(head);
+                                closegraph();
+                                return 0;  // quit
+                            }
+                        }
+                    }
+
+                    // 悬停检测
+                    if (lmx >= left && lmx <= left + btnW && lmy >= restartTop && lmy <= restartTop + btnH) {
+                        inRestartBtn = 1;
+                    }
+                    if (lmx >= left && lmx <= left + btnW && lmy >= quitTop && lmy <= quitTop + btnH) {
+                        inQuitBtn = 1;
+                    }
+
+                    // 重绘（保留游戏背景）
+                    cleardevice();
+                    DrawLinkList(head, 80);
+                    DrawGame(&player1, canFly);
+                    drawlosinginterface(cfg.scr_w, cfg.scr_h, inRestartBtn, inQuitBtn);
+                    FlushBatchDraw();
+                    Sleep(16);
+                }
+
+                // 重置游戏
                 player1.Pos.y = 320;
                 player1.vy = 0;
                 player1.energy = cfg.energy_max;
+                player1.data = 1;
+                player1.isPassing = 0;
+                player1.passingWall = NULL;
                 canFly = 1;
                 order = 0;
                 count = 0;
-                player1.isPassing = 0;
-                player1.passingWall = NULL;
-                // 清空链表
-                drawlosinginterface();
                 clear_linklist(head);
-                
-                
+                continue;
             }
 
             // 视图层 (Render)
