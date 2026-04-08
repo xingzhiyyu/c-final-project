@@ -178,6 +178,7 @@ int main() {
                 order = 0;
                 count = 0;
                 clear_linklist(head);
+                isSpacePressed = 0;
                 continue;
             }
 
