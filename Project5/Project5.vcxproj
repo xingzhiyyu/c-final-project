@@ -130,12 +130,14 @@
   <ItemGroup>
     <ClInclude Include="config.h" />
     <ClInclude Include="draw.h" />
+    <ClInclude Include="files.h" />
     <ClInclude Include="logic.h" />
     <ClInclude Include="physics.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="config.cpp" />
     <ClCompile Include="draw.cpp" />
+    <ClCompile Include="files.cpp" />
     <ClCompile Include="logic.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="physics.cpp" />
