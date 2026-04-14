@@ -46,33 +46,39 @@ int main() {
         //开始界面
         cleardevice();
         setbkcolor(RGB(131, 181, 217));
-        /*if (esc_interface) {
+        if (esc_interface) {
             cleardevice();
-            setbkcolor(BLACK);
-            settextcolor(WHITE);
-			outtextxy(cfg.scr_w / 2 - textwidth(_T("Are you sure you want to quit?")) / 2, cfg.scr_h / 2 - 100, _T("Are you sure you want to quit?"));
-			outtextxy(cfg.scr_w / 2 - textwidth(_T("Press ESC again to confirm, or click anywhere to cancel.")) / 2, cfg.scr_h / 2, _T("Press ESC again to confirm, or click anywhere to cancel."));
-            // 键盘
-    while (peekmessage(&msg, EX_KEY)) {
-    if (msg.message == WM_KEYDOWN && msg.vkcode == VK_ESCAPE) {
-        clear_linklist(head);
-        free(head);
-        closegraph();
-        return 0;
-    }
-    if (msg.message == WM_KEYDOWN && msg.vkcode != VK_ESCAPE) {
-        esc_interface = 0;
-    }
-}
+            outtextxy(cfg.scr_w / 2 - textwidth(_T("Are you sure you want to quit?")) / 2, cfg.scr_h / 2 - 100, _T("Are you sure you want to quit?"));
+            outtextxy(cfg.scr_w / 2 - textwidth(_T("Press ESC again to confirm, or click anywhere to cancel.")) / 2, cfg.scr_h / 2, _T("Press ESC again to confirm, or click anywhere to cancel."));
+            if (peekmessage(&msg)) {
+                setbkcolor(BLACK);
+                settextcolor(WHITE);
+                //键盘
 
-// 鼠标
-while (peekmessage(&msg, EX_MOUSE)) {
-    if (msg.message == WM_LBUTTONDOWN) {
-        esc_interface = 0;
-    }
-}
-        }*/
-        if (!gameStarted && !logging) {
+                if (msg.message == WM_KEYDOWN && msg.vkcode == VK_ESCAPE) {
+                    clear_linklist(head);
+                    free(head);
+                    closegraph();
+                    return 0;
+                }
+                if (msg.message == WM_KEYDOWN && msg.vkcode != VK_ESCAPE) {
+                    esc_interface = 0;
+                    FlushBatchDraw();
+                    continue;
+                }
+
+
+                // 鼠标
+
+                if (msg.message == WM_LBUTTONDOWN) {
+                    esc_interface = 0;
+                    FlushBatchDraw();
+                    continue;
+                }
+            }
+        }
+        
+        if (!gameStarted && !logging && !esc_interface) {
 
             int btnWid = 220;
             int btnHei = 60;
@@ -82,11 +88,15 @@ while (peekmessage(&msg, EX_MOUSE)) {
             int loginTop = startTop + btnHei + gap;
             
 
-            while (peekmessage(&msg, EX_MOUSE)) {
+            while (peekmessage(&msg)) {
 
                 //更新鼠标位置
                 mx = msg.x;
                 my = msg.y;
+				if (msg.message == WM_KEYDOWN && msg.vkcode == VK_ESCAPE) {
+                    cleardevice();
+                    esc_interface = 1;
+                }
 
                 //处理逻辑
                 if (msg.message == WM_LBUTTONDOWN) {
@@ -162,6 +172,8 @@ while (peekmessage(&msg, EX_MOUSE)) {
                     count = 0;
                     clear_linklist(head);
                     isSpacePressed = 0;
+                    FlushBatchDraw();
+                    continue;
                 }
             
             }

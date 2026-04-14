@@ -1,5 +1,6 @@
 #include"config.h"
 #include"physics.h"
+#include <stdio.h>
 void UpdatePhysics(struct circle* p, const struct GlobalConfig* cfg, int isSpacePressed, int* canFly) {
     if (p->isPassing == 1) {
         p->vy = 0;
@@ -80,6 +81,7 @@ void move_all_nodes(linknode* head, const struct GlobalConfig* cfg) {
     }
 }
 int CheckCollision(struct circle* player, linknode* head) {
+    printf("CheckCollision called\n");
     if (head == NULL) return 0;
 
     int boxSize = 80;
