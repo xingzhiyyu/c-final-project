@@ -72,7 +72,7 @@ while (peekmessage(&msg, EX_MOUSE)) {
     }
 }
         }*/
-        if (!gameStarted && !logging && !esc_interface) {
+        if (!gameStarted && !logging) {
 
             int btnWid = 220;
             int btnHei = 60;
@@ -80,12 +80,7 @@ while (peekmessage(&msg, EX_MOUSE)) {
             int left = cfg.scr_w / 2 - btnWid / 2;
             int startTop = cfg.scr_h / 2 - 40;
             int loginTop = startTop + btnHei + gap;
-            while (peekmessage(&msg, EX_KEY)) {
-                if (msg.vkcode == VK_ESCAPE && msg.message == WM_KEYDOWN) {
-                    esc_interface = 1;
-                }
-
-            }
+            
 
             while (peekmessage(&msg, EX_MOUSE)) {
 
