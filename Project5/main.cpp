@@ -20,13 +20,17 @@ int main() {
     player1.energy = cfg.energy_max;
     player1.data = 1;
     player1.isPassing = 0;
-
-    int canFly = 1, isSpacePressed = 0;
+    //角色状态
+    int canFly = 1;
+    int isSpacePressed = 0;
+    //UI状态
     int gameStarted = 0;
     int isLoggedIn = 0;
     int logging = 0;
     int inloginbutton = 0;
     int instartbutton = 0;
+    int esc_interface = 0;
+    //鼠标位置
     int mx = 0;
     int my = 0;
 
@@ -42,7 +46,33 @@ int main() {
         //开始界面
         cleardevice();
         setbkcolor(RGB(131, 181, 217));
-        if (!gameStarted && !logging) {
+        /*if (esc_interface) {
+            cleardevice();
+            setbkcolor(BLACK);
+            settextcolor(WHITE);
+			outtextxy(cfg.scr_w / 2 - textwidth(_T("Are you sure you want to quit?")) / 2, cfg.scr_h / 2 - 100, _T("Are you sure you want to quit?"));
+			outtextxy(cfg.scr_w / 2 - textwidth(_T("Press ESC again to confirm, or click anywhere to cancel.")) / 2, cfg.scr_h / 2, _T("Press ESC again to confirm, or click anywhere to cancel."));
+            // 键盘
+    while (peekmessage(&msg, EX_KEY)) {
+    if (msg.message == WM_KEYDOWN && msg.vkcode == VK_ESCAPE) {
+        clear_linklist(head);
+        free(head);
+        closegraph();
+        return 0;
+    }
+    if (msg.message == WM_KEYDOWN && msg.vkcode != VK_ESCAPE) {
+        esc_interface = 0;
+    }
+}
+
+// 鼠标
+while (peekmessage(&msg, EX_MOUSE)) {
+    if (msg.message == WM_LBUTTONDOWN) {
+        esc_interface = 0;
+    }
+}
+        }*/
+        if (!gameStarted && !logging && !esc_interface) {
 
             int btnWid = 220;
             int btnHei = 60;
@@ -50,6 +80,12 @@ int main() {
             int left = cfg.scr_w / 2 - btnWid / 2;
             int startTop = cfg.scr_h / 2 - 40;
             int loginTop = startTop + btnHei + gap;
+            while (peekmessage(&msg, EX_KEY)) {
+                if (msg.vkcode == VK_ESCAPE && msg.message == WM_KEYDOWN) {
+                    esc_interface = 1;
+                }
+
+            }
 
             while (peekmessage(&msg, EX_MOUSE)) {
 
@@ -81,6 +117,7 @@ int main() {
 
             if (mx >= left && mx <= left + btnWid && my >= loginTop && my <= loginTop + btnHei) {
                 inloginbutton = 1;
+                
             }
 
 
@@ -89,9 +126,15 @@ int main() {
 
 
         else if (!gameStarted && logging) {
+        
+            while (peekmessage(&msg, EX_KEY)) {
+                if (msg.vkcode == VK_ESCAPE && msg.message == WM_KEYDOWN) {
+                    logging = 0;
+                }
+            }
             drawlogininterface();
         }
-        else {//游戏开始
+        else if(gameStarted) {//游戏开始
           
             if (count >= 120) {
                 count = 0;
@@ -104,8 +147,28 @@ int main() {
 
             // 输入
             while (peekmessage(&msg, EX_KEY)) {
-                if (msg.message == WM_KEYDOWN && msg.vkcode == VK_SPACE) isSpacePressed = 1;
-                if (msg.message == WM_KEYUP && msg.vkcode == VK_SPACE) isSpacePressed = 0;
+                if (msg.message == WM_KEYDOWN && msg.vkcode == VK_SPACE) {
+                    isSpacePressed = 1;
+                }
+                if (msg.message == WM_KEYUP && msg.vkcode == VK_SPACE) {
+                    isSpacePressed = 0;
+                }
+                if (msg.vkcode == VK_ESCAPE && msg.message == WM_KEYDOWN) {
+                    gameStarted = 0; 
+                    //游戏内部重置
+                    player1.Pos.y = 320;
+                    player1.vy = 0;
+                    player1.energy = cfg.energy_max;
+                    player1.data = 1;
+                    player1.isPassing = 0;
+                    player1.passingWall = NULL;
+                    canFly = 1;
+                    order = 0;
+                    count = 0;
+                    clear_linklist(head);
+                    isSpacePressed = 0;
+                }
+            
             }
 
             
