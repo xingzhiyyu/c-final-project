@@ -273,7 +273,8 @@ int main() {
 #include "draw.h"
 #include "config.h"
 #include "logic.h"
-
+#include "files.h"
+#define  _CRT_SECURE_NO_WARNINGS 
 
 int main() {
     int count = 0;
@@ -321,6 +322,7 @@ int main() {
                 if (msg.vkcode == VK_ESCAPE) {
                     if (uiState == UIStart) uiState = UIEsc;
                     else if (uiState == UIGame) uiState = UIStart;
+                    else if (uiState == UILogging) uiState = UIStart;
                 }
 
                 if (msg.vkcode == VK_SPACE) {
@@ -349,6 +351,8 @@ int main() {
             }
         }
         if (uiState == 0) {
+            ResetGame(&player1, &cfg, &canFly, &order, &count, head, &isSpacePressed, (int*)&uiState);
+        
             int btnWid = 220;
             int btnHei = 60;
             int gap = 24;
@@ -412,10 +416,12 @@ int main() {
 
             int btnW = 220, btnH = 60, gap = 24;
             int left = cfg.scr_w / 2 - btnW / 2;
-            int restartTop = cfg.scr_h / 2 - 40;
+            int restartTop = cfg.scr_h / 2 - 80;
             int quitTop = restartTop + btnH + gap;
+            int saveTop = quitTop + btnH + gap + 60;
             int inRestartBtn = 0;
             int inQuitBtn = 0;
+            int inSaveBtn = 0;
 
             if (mx >= left && mx <= left + btnW && my >= restartTop && my <= restartTop + btnH) {
                 inRestartBtn = 1;
@@ -423,22 +429,14 @@ int main() {
             if (mx >= left && mx <= left + btnW && my >= quitTop && my <= quitTop + btnH) {
                 inQuitBtn = 1;
             }
-            drawlosinginterface(cfg.scr_w, cfg.scr_h, inRestartBtn, inQuitBtn);
+            if (mx >= left && mx <= left + btnW && my >= saveTop && my <= saveTop + btnH) {
+                inSaveBtn = 1;
+            }
+            drawlosinginterface(cfg.scr_w, cfg.scr_h, inRestartBtn, inQuitBtn,inSaveBtn);
 
             if (isClicked) {
                 if (inRestartBtn) {
-                    player1.Pos.y = 320;
-                    player1.vy = 0;
-                    player1.energy = cfg.energy_max;
-                    player1.data = 1;
-                    player1.isPassing = 0;
-                    player1.passingWall = NULL;
-                    canFly = 1;
-                    order = 0;
-                    count = 0;
-                    clear_linklist(head);
-                    isSpacePressed = 0;
-                    uiState = UIStart;
+                    ResetGame(&player1, &cfg, &canFly, &order, &count, head, &isSpacePressed, (int*)&uiState);
                 }
                 else if (inQuitBtn) {
                     clear_linklist(head);
@@ -446,6 +444,9 @@ int main() {
                     closegraph();
                     return 0;
 
+                }
+                else if (inSaveBtn) {
+                    createfile_archive()
                 }
                 else {
                     ;
@@ -472,6 +473,10 @@ int main() {
             UpdatePhysics(&player1, &cfg, isSpacePressed, &canFly);
             UpdateEnvironment(&player1, &cfg, isSpacePressed, &canFly);
 
+        }
+        if (uiState == UILogging) {
+            drawlogininterface();
+            
         }
 
         FlushBatchDraw();

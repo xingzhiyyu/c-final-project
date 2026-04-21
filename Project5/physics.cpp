@@ -81,7 +81,6 @@ void move_all_nodes(linknode* head, const struct GlobalConfig* cfg) {
     }
 }
 int CheckCollision(struct circle* player, linknode* head) {
-    printf("CheckCollision called\n");
     if (head == NULL) return 0;
 
     int boxSize = 80;

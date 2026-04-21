@@ -138,7 +138,7 @@ void drawlogininterface() {
     outtextxy(480 - 0.5 * textwidth(_T("You need to restart the program right now")), 360 - 0.5 * textheight(_T("You need to restart the program right now")), _T("You need to restart the program right now"));
 
 }
-void drawlosinginterface(int scrW, int scrH, int inRestartBtn, int inQuitBtn) {
+void drawlosinginterface(int scrW, int scrH, int inRestartBtn, int inQuitBtn,int inSaveBtn) {
   
     // Game Over 标题
     setbkmode(TRANSPARENT);
@@ -151,8 +151,9 @@ void drawlosinginterface(int scrW, int scrH, int inRestartBtn, int inQuitBtn) {
     int btnH = 60;
     int gap = 24;
     int left = scrW / 2 - btnW / 2;
-    int restartTop = scrH / 2 - 40;
+    int restartTop = scrH / 2 - 80;
     int quitTop = restartTop + btnH + gap;
+    int saveTop = quitTop + btnH + gap + 60;
 
     setlinecolor(WHITE);
 
@@ -167,4 +168,11 @@ void drawlosinginterface(int scrW, int scrH, int inRestartBtn, int inQuitBtn) {
     setfillcolor(inQuitBtn ? RGB(140, 40, 40) : RGB(200, 60, 60));
     fillroundrect(left, quitTop, left + btnW, quitTop + btnH, 12, 12);
     outtextxy(left + (btnW - textwidth(_T("QUIT"))) / 2, quitTop + (btnH - textheight(_T("QUIT"))) / 2, _T("QUIT"));
+
+    outtextxy(scrW/2 - textwidth(_T("Save Your Data?"))/2, saveTop - 50, _T("Save Your Data?"));
+    //save按钮
+    setfillcolor(inSaveBtn ? RGB(40, 160, 40) : RGB(60,180,60));
+    fillroundrect(left, saveTop, left + btnW, saveTop + btnH, 12, 12);
+    outtextxy(left + (btnW - textwidth(_T("SAVE"))) / 2, saveTop + (btnH - textheight(_T("SAVE"))) / 2, _T("SAVE"));
+       
 }

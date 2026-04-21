@@ -135,3 +135,27 @@ void clear_linklist(linknode* head) {
     }
     head->next = NULL;
 }
+// 重置游戏状态的封装函数
+void ResetGame(struct circle* p, struct GlobalConfig* cfg, int* canFly, int* order, int* count, linknode* head, int* isSpacePressed, int* uiState) {
+    // 重置玩家物理属性
+    p->Pos.y = 320;
+    p->vy = 0;
+    p->energy = cfg->energy_max;
+    p->data = 1;
+    p->isPassing = 0;
+    p->passingWall = NULL;
+
+    // 重置逻辑控制变量
+    *canFly = 1;
+    *order = 0;
+    *count = 0;
+    *isSpacePressed = 0;
+
+    // 清空障碍物链表并重新初始化
+    clear_linklist(head);
+    // 如果你的 create_linklist 是初始化头结点，这里可能需要重新调用
+    // create_linklist(head); 
+
+    // 返回到初始界面或直接开始
+    *uiState = 0; // 0 对应 UIStart
+}
