@@ -491,7 +491,7 @@ int main() {
             if (isEnterPressed && ipb == 0){
                 ipb = InputBox(Username, 14, _T("Enter your user name in less than 12 character"), _T("username"));
                 if (ipb) {
-                    uiState = UILogging;
+                    uiState = UIStart;
                     isLoggedIn = 1;
 					ShowToast(&myToast, _T("login successful"), 480, 60, 60);
                 }
