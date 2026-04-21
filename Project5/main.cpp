@@ -282,7 +282,7 @@ int main() {
     InitConfig(&cfg);
     int order = 0;
     int isLoggedIn = 0;
-
+    UI_Toast myToast = { 0 };
     struct circle player1;
     player1.Pos.x = 40;
     player1.Pos.y = 320;
@@ -294,11 +294,14 @@ int main() {
     //角色状态
     int canFly = 1;
     int isSpacePressed = 0;
+	int isEnterPressed = 0;
     //UI状态
     enum { UIStart = 0, UIGame, UILosing, UIEsc, UILogging } uiState = UIStart;
     //鼠标位置
     int mx = 0;
     int my = 0;
+	TCHAR Username[14];
+    int ipb = 0;
 
     int isClicked = 0;
 
@@ -314,6 +317,7 @@ int main() {
         setbkcolor(RGB(131, 181, 217));
         BeginBatchDraw();
         cleardevice();
+		isClicked = 0;
 
         while (peekmessage(&msg)) {
 
@@ -328,11 +332,17 @@ int main() {
                 if (msg.vkcode == VK_SPACE) {
                     isSpacePressed = 1;
                 }
+                if (msg.vkcode == VK_RETURN) {
+                    isEnterPressed = 1;
+                }
             }
 
             else if (msg.message == WM_KEYUP) {
                 if (msg.vkcode == VK_SPACE) {
                     isSpacePressed = 0;
+                }
+                else if (msg.vkcode == VK_RETURN) {
+                    isEnterPressed = 0;
                 }
             }
             else if (msg.message == WM_MOUSEMOVE) {
@@ -342,12 +352,12 @@ int main() {
             else if (msg.message == WM_LBUTTONDOWN) {
                 mx = msg.x;
                 my = msg.y;
-                isClicked = 1;
+               
             }
             else if (msg.message == WM_LBUTTONUP) {
                 mx = msg.x;
                 my = msg.y;
-                isClicked = 0;
+                isClicked = 1;
             }
         }
         if (uiState == 0) {
@@ -377,7 +387,7 @@ int main() {
                 if (instartbutton) {
                     uiState = UIGame;
                 }
-                else if (inloginbutton) {
+                else if (inloginbutton && !isLoggedIn) {
                     uiState = UILogging;
                 }
             }
@@ -446,7 +456,8 @@ int main() {
 
                 }
                 else if (inSaveBtn) {
-                    createfile_archive()
+                    createfile_archive(Username,&cfg, player1.data);
+                    ShowToast(&myToast, _T("saved successfully"), 480, 60, 60);
                 }
                 else {
                     ;
@@ -476,9 +487,18 @@ int main() {
         }
         if (uiState == UILogging) {
             drawlogininterface();
+            ipb = 0;
+            if (isEnterPressed && ipb == 0){
+                ipb = InputBox(Username, 14, _T("Enter your user name in less than 12 character"), _T("username"));
+                if (ipb) {
+                    uiState = UILogging;
+                    isLoggedIn = 1;
+					ShowToast(&myToast, _T("login successful"), 480, 60, 60);
+                }
+            }
             
         }
-
+        RenderToast(&myToast);
         FlushBatchDraw();
         count++;
         Sleep(20);

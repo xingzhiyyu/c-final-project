@@ -1,7 +1,13 @@
 #pragma once
 
 #include<graphics.h>
-
+typedef struct {
+    int active;      // 是否激活
+    int timer;       // 剩余帧数
+    int x, y;        // 位置
+    int duration;    // 总时长
+    TCHAR text[64];  // 提示的内容
+} UI_Toast;
 
 struct linknode;
 struct GlobalConfig {
@@ -38,4 +44,4 @@ typedef struct Colorpair {
     COLORREF bg;
     COLORREF text;
 } ColorPair;
-
+void ShowToast(UI_Toast* toast, const TCHAR* message, int x, int y, int frames);

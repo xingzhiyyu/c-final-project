@@ -15,3 +15,4 @@ void drawlogininterface();
 void DrawLinkList(linknode* head, int size);
 
 void drawlosinginterface(int scrW, int scrH, int inRestartBtn, int inQuitBtn,int inSaveBtn);
+void RenderToast(UI_Toast* toast);

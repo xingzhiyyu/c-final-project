@@ -1,4 +1,5 @@
 #include "config.h"
+#include <tchar.h>
 
 void InitConfig(struct GlobalConfig* cfg) {
     // 物理参数
@@ -22,4 +23,16 @@ void InitConfig(struct GlobalConfig* cfg) {
 
     // 障碍物设定
     cfg->obstacle_speed = 6;
+}
+void ShowToast(UI_Toast* toast, const TCHAR* message, int x, int y, int frames) {
+    if (!toast) return;
+
+    toast->active = 1;
+    toast->timer = frames;
+    toast->duration = frames;
+    toast->x = x;
+    toast->y = y;
+
+    // 拷贝自定义内容
+    _tcscpy_s(toast->text, 64, message);
 }

@@ -4,6 +4,7 @@
 #include <tchar.h>
 #include "draw.h"
 #include "logic.h"
+#include "config.h"
 
 //display is 960 * 640，middle(480*320)
 
@@ -97,6 +98,7 @@ void DrawStartScreen(int scrW, int scrH, int isLoggedIn, int inloginbutton, int 
     outtextxy(left + (btnW - textwidth(_T("START"))) / 2, startTop + (btnH - textheight(_T("START"))) / 2, _T("START"));
 
     setfillcolor(inloginbutton ? RGB(40, 90, 60) : RGB(90, 160, 110));
+    if (isLoggedIn == 1)setfillcolor(RGB(40, 90, 60));
     fillroundrect(left, loginTop, left + btnW, loginTop + btnH, 12, 12);
     outtextxy(left + (btnW - textwidth(isLoggedIn ? _T("LOGGED IN") : _T("LOGIN"))) / 2, loginTop + (btnH - textheight(isLoggedIn ? _T("LOGGED IN") : _T("LOGIN"))) / 2,
         isLoggedIn ? _T("LOGGED IN") : _T("LOGIN"));
@@ -133,10 +135,8 @@ void drawlogininterface() {
     settextstyle(36, 0, _T("Consolas"));
     outtextxy(480 - 0.5 * textwidth(_T("please enter your username")), 160 - 0.5 * textheight(_T("please enter your username")), _T("please enter your username"));
     fillrectangle(200, 200, 760, 240);
-	outtextxy(480 - 0.5 * textwidth(_T("I haven't even created the login page yet,")), 280 - 0.5 * textheight(_T("I haven't even created the login page yet,")), _T("I haven't even created the login page yet,"));
-    outtextxy(480 - 0.5 * textwidth(_T("and I haven't designed the exit button either.")), 320 - 0.5 * textheight(_T("and I haven't designed the exit button either.")), _T("and I haven't designed the exit button either."));
-    outtextxy(480 - 0.5 * textwidth(_T("You need to restart the program right now")), 360 - 0.5 * textheight(_T("You need to restart the program right now")), _T("You need to restart the program right now"));
-
+	outtextxy(480 - 0.5 * textwidth(_T("Trying to fix this part")), 280 - 0.5 * textheight(_T("Try to fix this part")), _T("Trying to fix this part"));
+    
 }
 void drawlosinginterface(int scrW, int scrH, int inRestartBtn, int inQuitBtn,int inSaveBtn) {
   
@@ -175,4 +175,45 @@ void drawlosinginterface(int scrW, int scrH, int inRestartBtn, int inQuitBtn,int
     fillroundrect(left, saveTop, left + btnW, saveTop + btnH, 12, 12);
     outtextxy(left + (btnW - textwidth(_T("SAVE"))) / 2, saveTop + (btnH - textheight(_T("SAVE"))) / 2, _T("SAVE"));
        
+}
+void RenderToast(UI_Toast* toast) {
+    if (!toast || !toast->active) return;
+
+    // 1. 游戏背景色 (需对应你 setbkcolor 的值)
+    int bgR = 131, bgG = 181, bgB = 217;
+
+    // 2. 计算当前比例 (1.0 -> 0.0)
+    float ratio = (float)toast->timer / toast->duration;
+
+    // 3. 计算框的颜色：从纯白 (255) 渐变到背景蓝 (bg)
+    int boxR = bgR + (int)((255 - bgR) * ratio);
+    int boxG = bgG + (int)((255 - bgG) * ratio);
+    int boxB = bgB + (int)((255 - bgB) * ratio);
+
+    // 4. 计算文字颜色：从纯黑 (0) 渐变到背景蓝 (bg)
+    int txtR = bgR + (int)((0 - bgR) * ratio);
+    int txtG = bgG + (int)((0 - bgG) * ratio);
+    int txtB = bgB + (int)((0 - bgB) * ratio);
+
+    // --- 绘图部分 ---
+    int tw = textwidth(toast->text);
+    int th = textheight(toast->text);
+    int boxW = tw + 40, boxH = th + 20;
+    int bx = toast->x - boxW / 2, by = toast->y - boxH / 2;
+
+    // 画框
+    setfillcolor(RGB(boxR, boxG, boxB));
+    setlinecolor(RGB(boxR - 20, boxG - 20, boxB - 20)); // 边框也随之变淡
+    fillroundrect(bx, by, bx + boxW, by + boxH, 15, 15);
+
+    // 画字
+    settextcolor(RGB(txtR, txtG, txtB));
+    settextstyle(22, 0, _T("Microsoft YaHei"));
+    outtextxy(toast->x - tw / 2, toast->y - th / 2, toast->text);
+
+    // 逻辑更新
+    toast->y -= 1;
+    toast->timer--;
+    if (toast->timer <= 0) toast->active = 0;
+    setfillcolor(BLACK);
 }
