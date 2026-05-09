@@ -217,3 +217,10 @@ void RenderToast(UI_Toast* toast) {
     if (toast->timer <= 0) toast->active = 0;
     setfillcolor(BLACK);
 }
+void displayID(TCHAR username[]) {
+    settextcolor(WHITE);
+    settextstyle(20, 0, _T("Consolas"));
+    outtextxy(960 - textwidth(username) - textwidth(_T("ID:")) - 20, 20, _T("ID:"));
+    outtextxy(960 - textwidth(username) - 20, 20, username);
+}
+    

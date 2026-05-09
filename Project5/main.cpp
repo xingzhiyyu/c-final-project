@@ -319,7 +319,7 @@ int main() {
         cleardevice();
 		isClicked = 0;
 
-        while (peekmessage(&msg)) {
+        while (peekmessage(&msg)) {//获取输入
 
 
             if (msg.message == WM_KEYDOWN) {
@@ -360,7 +360,7 @@ int main() {
                 isClicked = 1;
             }
         }
-        if (uiState == 0) {
+		if (uiState == 0) {// 开始界面
             ResetGame(&player1, &cfg, &canFly, &order, &count, head, &isSpacePressed, (int*)&uiState);
         
             int btnWid = 220;
@@ -393,7 +393,7 @@ int main() {
             }
 
         }
-        else if (uiState == 3) {
+        else if (uiState == 3) { // ESC界面
             cleardevice();
             outtextxy(cfg.scr_w / 2 - textwidth(_T("Are you sure you want to quit?")) / 2, cfg.scr_h / 2 - 100, _T("Are you sure you want to quit?"));
             outtextxy(cfg.scr_w / 2 - textwidth(_T("Press ESC again to confirm, or click anywhere to cancel.")) / 2, cfg.scr_h / 2, _T("Press ESC again to confirm, or click anywhere to cancel."));
@@ -419,11 +419,11 @@ int main() {
             }
         }
         else if (uiState == 2)
-        {
+        {// 失败界面
             cleardevice();
             DrawLinkList(head, 80);
             DrawGame(&player1, canFly);
-
+            
             int btnW = 220, btnH = 60, gap = 24;
             int left = cfg.scr_w / 2 - btnW / 2;
             int restartTop = cfg.scr_h / 2 - 80;
@@ -465,8 +465,12 @@ int main() {
             }
 
         }
-        if (uiState == 1) {
+        if (uiState == 1) {// 游戏界面
+
             cleardevice();
+            if (isLoggedIn) {
+                displayID(Username);
+            }
             if (count >= 120) {
                 count = 0;
                 append_linknode(head, 960, order);
@@ -485,7 +489,7 @@ int main() {
             UpdateEnvironment(&player1, &cfg, isSpacePressed, &canFly);
 
         }
-        if (uiState == UILogging) {
+        if (uiState == UILogging) {// 登录界面
             drawlogininterface();
             ipb = 0;
             if (isEnterPressed && ipb == 0){

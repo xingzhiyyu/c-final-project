@@ -9,10 +9,12 @@
 // 绘图接口
 void DrawGame(const struct circle* p, int canFly);
 void DrawStartScreen(int scrW, int scrH, int isLoggedIn, int, int);
-// 新增：绘制方块接口
+// 绘制方块接口
 void DrawBox(int x, int y, int size, LPCTSTR text, ColorPair pair);
 void drawlogininterface();
 void DrawLinkList(linknode* head, int size);
 
 void drawlosinginterface(int scrW, int scrH, int inRestartBtn, int inQuitBtn,int inSaveBtn);
 void RenderToast(UI_Toast* toast);
+// 显示id
+void displayID(TCHAR username[]);

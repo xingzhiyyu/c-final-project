@@ -142,7 +142,7 @@ int CheckCollision(struct circle* player, linknode* head) {
             int gap_bottom = gap_top + boxSize;
             int gap_center_y = gap_top + boxSize / 2;
             int player_center_y = (int)player->Pos.y;
-            int tolerance = 10;
+            int tolerance = 20;
 
             // 判断能否进入通道
             if (abs(player_center_y - gap_center_y) <= tolerance) {
