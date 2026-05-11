@@ -18,3 +18,5 @@ void drawlosinginterface(int scrW, int scrH, int inRestartBtn, int inQuitBtn,int
 void RenderToast(UI_Toast* toast);
 // 显示id
 void displayID(TCHAR username[]);
+void showscore(int score);
+void showbestscore(int score);

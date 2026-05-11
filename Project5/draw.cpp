@@ -223,4 +223,17 @@ void displayID(TCHAR username[]) {
     outtextxy(960 - textwidth(username) - textwidth(_T("ID:")) - 20, 20, _T("ID:"));
     outtextxy(960 - textwidth(username) - 20, 20, username);
 }
-    
+void showscore(int score) {
+    TCHAR scoreText[20];
+    _stprintf(scoreText, _T("Score: %d"), score);
+    settextcolor(WHITE);
+    settextstyle(20, 0, _T("Consolas"));
+    outtextxy(660, 20, scoreText);
+}
+void showbestscore(int score) {
+    TCHAR scoreText[20];
+    _stprintf(scoreText, _T("BestScore: %d"), score);
+    settextcolor(WHITE);
+    settextstyle(20, 0, _T("Consolas"));
+    outtextxy(360, 20, scoreText);
+}
