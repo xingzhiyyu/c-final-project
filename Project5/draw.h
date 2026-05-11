@@ -20,3 +20,5 @@ void RenderToast(UI_Toast* toast);
 void displayID(TCHAR username[]);
 void showscore(int score);
 void showbestscore(int score);
+
+void drawfinalinterface(int scrW, int scrH, int score);

@@ -135,7 +135,6 @@ void drawlogininterface() {
     settextstyle(36, 0, _T("Consolas"));
     outtextxy(480 - 0.5 * textwidth(_T("please enter your username")), 160 - 0.5 * textheight(_T("please enter your username")), _T("please enter your username"));
     fillrectangle(200, 200, 760, 240);
-	outtextxy(480 - 0.5 * textwidth(_T("Trying to fix this part")), 280 - 0.5 * textheight(_T("Try to fix this part")), _T("Trying to fix this part"));
     
 }
 void drawlosinginterface(int scrW, int scrH, int inRestartBtn, int inQuitBtn,int inSaveBtn) {
@@ -236,4 +235,15 @@ void showbestscore(int score) {
     settextcolor(WHITE);
     settextstyle(20, 0, _T("Consolas"));
     outtextxy(360, 20, scoreText);
+}
+void drawfinalinterface(int scrW, int scrH, int score) {
+    cleardevice();
+    setbkcolor(WHITE);
+    settextcolor(BLACK);
+    settextstyle(36, 0, _T("Consolas"));
+	TCHAR titleText[30] = _T("congratulations");
+    TCHAR finalText[30];
+    _stprintf(finalText, _T("Your Final Score: %d"), score);
+    outtextxy(scrW / 2 - textwidth(titleText) / 2, scrH / 2 - 100, titleText);
+    outtextxy(scrW / 2 - textwidth(finalText) / 2, scrH / 2 - textheight(finalText) / 2, finalText);
 }

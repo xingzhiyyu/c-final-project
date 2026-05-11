@@ -28,7 +28,7 @@ int main() {
     int isSpacePressed = 0;
 	int isEnterPressed = 0;
     //UI状态
-    enum { UIStart = 0, UIGame, UILosing, UIEsc, UILogging } uiState = UIStart;
+    enum { UIStart = 0, UIGame, UILosing, UIEsc, UILogging,UIFinish } uiState = UIStart;
     //鼠标位置
     int mx = 0;
     int my = 0;
@@ -223,6 +223,9 @@ int main() {
             if (search_archive(Username) > 0) bestScore = search_archive(Username);
             UpdatePhysics(&player1, &cfg, isSpacePressed, &canFly);
             UpdateEnvironment(&player1, &cfg, isSpacePressed, &canFly);
+            if (player1.data > 1000000000) {
+                uiState = UIFinish;
+            }
 
         }
         if (uiState == UILogging) {// 登录界面
@@ -238,6 +241,11 @@ int main() {
 					if (search_archive(Username) > 0) bestScore = search_archive(Username);
                 }
             }
+            
+        }
+		if (uiState == UIFinish) {
+            
+            drawfinalinterface(960, 640, player1.data);
             
         }
         RenderToast(&myToast);
