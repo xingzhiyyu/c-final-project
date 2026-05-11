@@ -246,7 +246,7 @@ int main() {
 		if (uiState == UIFinish) {
             
             drawfinalinterface(960, 640, player1.data);
-            
+			clear_linklist(head);
         }
         RenderToast(&myToast);
         FlushBatchDraw();

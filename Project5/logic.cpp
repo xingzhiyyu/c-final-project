@@ -153,9 +153,7 @@ void ResetGame(struct circle* p, struct GlobalConfig* cfg, int* canFly, int* ord
 
     // 清空障碍物链表并重新初始化
     clear_linklist(head);
-    // 如果你的 create_linklist 是初始化头结点，这里可能需要重新调用
-    // create_linklist(head); 
-
+   
     // 返回到初始界面或直接开始
     *uiState = 0; // 0 对应 UIStart
 }
