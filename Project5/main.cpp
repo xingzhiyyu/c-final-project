@@ -203,7 +203,7 @@ int main() {
 
             cleardevice();
             if (isLoggedIn) {
-                displayID(Username);
+                displayID(Username);//显示id
             }
             if (count >= 120) {
                 count = 0;
@@ -211,12 +211,15 @@ int main() {
                 order++;
 
             }
+
             move_all_nodes(head, &cfg);
             delete_first_node_if(head);
-			showscore(int(player1.data));
-			showbestscore(int(bestScore));
+            // 生成游戏画面
             DrawLinkList(head, 80);
             DrawGame(&player1, canFly);
+            // 显示个人信息
+            showscore(int(player1.data));
+            showbestscore(int(bestScore));
             if (CheckCollision(&player1, head)) {
                 uiState = UILosing;
             }
@@ -224,6 +227,7 @@ int main() {
             UpdatePhysics(&player1, &cfg, isSpacePressed, &canFly);
             UpdateEnvironment(&player1, &cfg, isSpacePressed, &canFly);
             if (player1.data > 1000000000) {
+               
                 uiState = UIFinish;
             }
 
@@ -244,9 +248,11 @@ int main() {
             
         }
 		if (uiState == UIFinish) {
-            
+            if (count > 80){
             drawfinalinterface(960, 640, player1.data);
-			clear_linklist(head);
+			clear_linklist(head);//清理链表
+			createfile_archive(Username, &cfg, player1.data);//finish后自动保存
+            }
         }
         RenderToast(&myToast);
         FlushBatchDraw();

@@ -178,13 +178,13 @@ void drawlosinginterface(int scrW, int scrH, int inRestartBtn, int inQuitBtn,int
 void RenderToast(UI_Toast* toast) {
     if (!toast || !toast->active) return;
 
-    // 1. 游戏背景色 (需对应你 setbkcolor 的值)
+    //  游戏背景色
     int bgR = 131, bgG = 181, bgB = 217;
 
-    // 2. 计算当前比例 (1.0 -> 0.0)
+    //  计算当前比例 
     float ratio = (float)toast->timer / toast->duration;
 
-    // 3. 计算框的颜色：从纯白 (255) 渐变到背景蓝 (bg)
+    // 计算框的颜色：从纯白渐变到背景
     int boxR = bgR + (int)((255 - bgR) * ratio);
     int boxG = bgG + (int)((255 - bgG) * ratio);
     int boxB = bgB + (int)((255 - bgB) * ratio);
@@ -202,7 +202,7 @@ void RenderToast(UI_Toast* toast) {
 
     // 画框
     setfillcolor(RGB(boxR, boxG, boxB));
-    setlinecolor(RGB(boxR - 20, boxG - 20, boxB - 20)); // 边框也随之变淡
+    setlinecolor(RGB(boxR - 20, boxG - 20, boxB - 20)); // 边框变淡
     fillroundrect(bx, by, bx + boxW, by + boxH, 15, 15);
 
     // 画字
